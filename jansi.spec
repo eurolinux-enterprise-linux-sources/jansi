@@ -1,6 +1,6 @@
 Name:             jansi
 Version:          1.9
-Release:          5%{?dist}
+Release:          7%{?dist}
 Summary:          Jansi is a java library for generating and interpreting ANSI escape sequences
 License:          ASL 2.0
 URL:              http://jansi.fusesource.org/
@@ -46,6 +46,9 @@ This package contains the API documentation for %{name}.
 
 %mvn_file org.fusesource.jansi:jansi %{name}
 
+# Remove unnecessary deps for jansi-native builds
+%pom_xpath_remove "pom:dependencies/pom:dependency[pom:artifactId = 'jansi-native' and pom:classifier != '']" jansi/pom.xml
+
 %build
 %mvn_build
 
@@ -59,6 +62,13 @@ This package contains the API documentation for %{name}.
 %doc license.txt
 
 %changelog
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 1.9-7
+- Mass rebuild 2013-12-27
+
+* Mon Nov 11 2013 Stanislav Ochotnicky <sochotnicky@redhat.com> - 1.9-6
+- Rebuild for jansi-native changes
+- Resolves: rhbz#1028540
+
 * Thu Aug 15 2013 Stanislav Ochotnicky <sochotnicky@redhat.com> - 1.9-5
 - Migrate away from mvn-rpmbuild (#997431)
 
